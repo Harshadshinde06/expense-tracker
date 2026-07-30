@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState("");
-  const [expenses, setExpenses] = useState([]);
+  const [expenses, setExpenses] = useState(() => {
+  const savedExpenses = localStorage.getItem("expenses");
+
+  return savedExpenses ? JSON.parse(savedExpenses) : [];
+});
+  
 
   const addExpense = () => {
   const newExpense = {
@@ -27,6 +32,12 @@ const deleteExpense = (index) => {
 const totalAmount = expenses.reduce((total, item) => {
   return total + Number(item.amount);
 }, 0);
+
+useEffect(() => {
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}, [expenses]);
+
+
 
 
   return (
