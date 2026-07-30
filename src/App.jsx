@@ -6,6 +6,7 @@ function App() {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Food");
   const [search, setSearch] = useState("");
+  const [editIndex, setEditIndex] = useState(null);
   const [expenses, setExpenses] = useState(() => {
   const savedExpenses = localStorage.getItem("expenses");
 
@@ -13,18 +14,26 @@ function App() {
 });
   
 
-  const addExpense = () => {
-const newExpense = {
-  name: expense,
-  amount: amount,
-  category: category,
-};
+ const addExpense = () => {
+  const newExpense = {
+    name: expense,
+    amount: amount,
+    category: category,
+  };
 
- setExpenses([...expenses, newExpense]);
+  if (editIndex === null) {
+    setExpenses([...expenses, newExpense]);
+  } else {
+    const updatedExpenses = [...expenses];
+    updatedExpenses[editIndex] = newExpense;
+    setExpenses(updatedExpenses);
+    setEditIndex(null);
+  }
 
-setExpense("");
-setAmount("");
-};
+  setExpense("");
+  setAmount("");
+  setCategory("Food");
+}; 
 
 const deleteExpense = (index) => {
   const updatedExpenses = expenses.filter((_, i) => i !== index);
@@ -86,38 +95,55 @@ useEffect(() => {
     item.name.toLowerCase().includes(search.toLowerCase())
   )
   .map((item, index) => (
-  <div
-    key={index}
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginTop: "10px",
-      padding: "10px",
-      border: "1px solid #ddd",
-      borderRadius: "8px",
-    }}
-  >
-  <span>
-  {item.category === "Food" && "🍔 "}
-  {item.category === "Travel" && "🚌 "}
-  {item.category === "Shopping" && "🛍️ "}
-  {item.category === "Entertainment" && "🎬 "}
-
-  {item.category} | {item.name} - ₹ {item.amount}
-</span>
-
-    <button
-      onClick={() => deleteExpense(index)}
+    <div
+      key={index}
       style={{
-        width: "70px",
-        background: "red",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginTop: "10px",
+        padding: "10px",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
       }}
     >
-      Delete
-    </button>
-  </div>
-))}
+      <span>
+        {item.category === "Food" && "🍔 "}
+        {item.category === "Travel" && "🚌 "}
+        {item.category === "Shopping" && "🛍️ "}
+        {item.category === "Entertainment" && "🎬 "}
+
+        {item.category} | {item.name} - ₹ {item.amount}
+      </span>
+
+      <div style={{ display: "flex", gap: "10px" }}>
+        <button
+          onClick={() => {
+            setExpense(item.name);
+            setAmount(item.amount);
+            setCategory(item.category);
+            setEditIndex(index);
+          }}
+          style={{
+            width: "70px",
+            background: "blue",
+          }}
+        >
+          Edit
+        </button>
+
+        <button
+          onClick={() => deleteExpense(index)}
+          style={{
+            width: "70px",
+            background: "red",
+          }}
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  ))}
 
 <h2 className="total">
   Total Expense: ₹ {totalAmount}
