@@ -7,6 +7,7 @@ function App() {
   const [category, setCategory] = useState("Food");
   const [search, setSearch] = useState("");
   const [editIndex, setEditIndex] = useState(null);
+  const [filterCategory, setFilterCategory] = useState("All");
   const [expenses, setExpenses] = useState(() => {
   const savedExpenses = localStorage.getItem("expenses");
 
@@ -69,6 +70,17 @@ useEffect(() => {
         onChange={(e) => setExpense(e.target.value)}
       />
 
+      <select
+  value={filterCategory}
+  onChange={(e) => setFilterCategory(e.target.value)}
+>
+  <option value="All">All Categories</option>
+  <option value="Food">Food</option>
+  <option value="Travel">Travel</option>
+  <option value="Shopping">Shopping</option>
+  <option value="Entertainment">Entertainment</option>
+</select>
+
    <input
   type="number"
   placeholder="Enter Amount"
@@ -94,6 +106,10 @@ useEffect(() => {
   .filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   )
+   .filter((item) =>
+    filterCategory === "All" || item.category === filterCategory
+  )
+  
   .map((item, index) => (
     <div
       key={index}
