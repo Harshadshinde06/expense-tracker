@@ -24,6 +24,10 @@ const deleteExpense = (index) => {
   setExpenses(updatedExpenses);
 };
 
+const totalAmount = expenses.reduce((total, item) => {
+  return total + Number(item.amount);
+}, 0);
+
 
   return (
     <div className="container">
@@ -75,6 +79,10 @@ const deleteExpense = (index) => {
     </button>
   </div>
 ))}
+
+<h2 className="total">
+  Total Expense: ₹ {totalAmount}
+</h2>
 
     </div>
   );
