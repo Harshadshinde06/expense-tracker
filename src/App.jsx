@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState("");
+  const [category, setCategory] = useState("Food");
   const [expenses, setExpenses] = useState(() => {
   const savedExpenses = localStorage.getItem("expenses");
 
@@ -12,10 +13,11 @@ function App() {
   
 
   const addExpense = () => {
-  const newExpense = {
-    name: expense,
-    amount: amount,
-  };
+const newExpense = {
+  name: expense,
+  amount: amount,
+  category: category,
+};
 
  setExpenses([...expenses, newExpense]);
 
@@ -51,14 +53,24 @@ useEffect(() => {
         onChange={(e) => setExpense(e.target.value)}
       />
 
-      <input
-        type="number"
-        placeholder="Enter Amount"
-        value={amount}
-        onChange={(e) => setAmount(e.target.value)}
-      />
+   <input
+  type="number"
+  placeholder="Enter Amount"
+  value={amount}
+  onChange={(e) => setAmount(e.target.value)}
+/>
 
-      <button onClick={addExpense}>
+<select
+  value={category}
+  onChange={(e) => setCategory(e.target.value)}
+>
+  <option value="Food">🍔 Food</option>
+  <option value="Travel">🚌 Travel</option>
+  <option value="Shopping">🛍 Shopping</option>
+  <option value="Entertainment">🎬 Entertainment</option>
+</select>
+
+<button onClick={addExpense}>
   Add Expense
 </button>
 
@@ -75,9 +87,14 @@ useEffect(() => {
       borderRadius: "8px",
     }}
   >
-    <span>
-      {item.name} - ₹ {item.amount}
-    </span>
+  <span>
+  {item.category === "Food" && "🍔 "}
+  {item.category === "Travel" && "🚌 "}
+  {item.category === "Shopping" && "🛍️ "}
+  {item.category === "Entertainment" && "🎬 "}
+
+  {item.category} | {item.name} - ₹ {item.amount}
+</span>
 
     <button
       onClick={() => deleteExpense(index)}
