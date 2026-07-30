@@ -5,6 +5,7 @@ function App() {
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("Food");
+  const [search, setSearch] = useState("");
   const [expenses, setExpenses] = useState(() => {
   const savedExpenses = localStorage.getItem("expenses");
 
@@ -45,6 +46,12 @@ useEffect(() => {
   return (
     <div className="container">
       <h1>💰 Expense Tracker</h1>
+      <input
+  type="text"
+  placeholder="🔍 Search Expense"
+  value={search}
+  onChange={(e) => setSearch(e.target.value)}
+/>
 
       <input
         type="text"
@@ -74,7 +81,11 @@ useEffect(() => {
   Add Expense
 </button>
 
-{expenses.map((item, index) => (
+{expenses
+  .filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  )
+  .map((item, index) => (
   <div
     key={index}
     style={{
