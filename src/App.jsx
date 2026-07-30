@@ -8,6 +8,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [editIndex, setEditIndex] = useState(null);
   const [filterCategory, setFilterCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("default");
   const [expenses, setExpenses] = useState(() => {
   const savedExpenses = localStorage.getItem("expenses");
 
@@ -81,6 +82,17 @@ useEffect(() => {
   <option value="Entertainment">Entertainment</option>
 </select>
 
+<select
+  value={sortBy}
+  onChange={(e) => setSortBy(e.target.value)}
+>
+  <option value="default">Sort By</option>
+  <option value="amountLow">Amount (Low to High)</option>
+  <option value="amountHigh">Amount (High to Low)</option>
+  <option value="nameAZ">Name (A-Z)</option>
+  <option value="nameZA">Name (Z-A)</option>
+</select>
+
    <input
   type="number"
   placeholder="Enter Amount"
@@ -109,7 +121,27 @@ useEffect(() => {
    .filter((item) =>
     filterCategory === "All" || item.category === filterCategory
   )
-  
+ .sort((a, b) => {
+  if (sortBy === "amountLow") {
+    return Number(a.amount) - Number(b.amount);
+  }
+
+  if (sortBy === "amountHigh") {
+    return Number(b.amount) - Number(a.amount);
+  }
+
+  if (sortBy === "nameAZ") {
+    return a.name.localeCompare(b.name);
+  }
+
+  if (sortBy === "nameZA") {
+    return b.name.localeCompare(a.name);
+  }
+
+  return 0;
+})
+
+
   .map((item, index) => (
     <div
       key={index}
