@@ -159,3 +159,25 @@ button:hover {
   color: white;
   width: 70px;
 }
+
+
+.dark {
+  background: #1e1e1e;
+  color: white;
+}
+
+.dark input,
+.dark select {
+  background: #2d2d2d;
+  color: white;
+  border: 1px solid #555;
+}
+
+.dark .card {
+  background: #2d2d2d;
+  color: white;
+}
+
+.dark button {
+  color: white;
+}

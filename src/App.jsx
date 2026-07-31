@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [expense, setExpense] = useState("");
   const [amount, setAmount] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
   const [category, setCategory] = useState("Food");
   const [search, setSearch] = useState("");
   const [editIndex, setEditIndex] = useState(null);
@@ -90,8 +91,13 @@ useEffect(() => {
 
 
   return (
-    <div className="container">
+    <div className={darkMode ? "container dark" : "container"}>
       <h1>💰 Expense Tracker</h1>
+      <button
+  onClick={() => setDarkMode(!darkMode)}
+>
+  {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+</button>
      <div className="dashboard">
 
  <div className="card green">
