@@ -181,3 +181,14 @@ button:hover {
 .dark button {
   color: white;
 }
+
+
+.add-btn {
+  background: #4caf50;
+  color: white;
+  font-weight: bold;
+}
+
+.add-btn:hover {
+  background: #43a047;
+}

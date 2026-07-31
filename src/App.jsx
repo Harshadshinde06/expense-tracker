@@ -175,7 +175,7 @@ useEffect(() => {
   <option value="Entertainment">🎬 Entertainment</option>
 </select>
 
-<button onClick={addExpense}>
+<button className="add-btn" onClick={addExpense}>
   Add Expense
 </button>
 
@@ -261,9 +261,6 @@ useEffect(() => {
     </div>
   ))}
 
-<h2 className="total">
-  Total Expense: ₹ {totalAmount}
-</h2>
 
     </div>
   );
