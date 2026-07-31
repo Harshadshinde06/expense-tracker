@@ -81,7 +81,7 @@ useEffect(() => {
   </div>
 
  <div className="card orange">
-  
+
     <h3>Highest Expense</h3>
     <h2>₹ {highestExpense}</h2>
   </div>
@@ -100,6 +100,10 @@ useEffect(() => {
         value={expense}
         onChange={(e) => setExpense(e.target.value)}
       />
+
+
+      <div className="filters"></div>
+
 
       <select
   value={filterCategory}
@@ -194,31 +198,24 @@ useEffect(() => {
         {item.category} | {item.name} - ₹ {item.amount}
       </span>
 
-      <div style={{ display: "flex", gap: "10px" }}>
+      <div className="action-buttons">
+      <button
+  className="edit-btn"
+  onClick={() => {
+    setExpense(item.name);
+    setAmount(item.amount);
+    setCategory(item.category);
+    setEditIndex(index);
+  }}
+>
+  Edit
+</button>
         <button
-          onClick={() => {
-            setExpense(item.name);
-            setAmount(item.amount);
-            setCategory(item.category);
-            setEditIndex(index);
-          }}
-          style={{
-            width: "70px",
-            background: "blue",
-          }}
-        >
-          Edit
-        </button>
-
-        <button
-          onClick={() => deleteExpense(index)}
-          style={{
-            width: "70px",
-            background: "red",
-          }}
-        >
-          Delete
-        </button>
+  className="delete-btn"
+  onClick={() => deleteExpense(index)}
+>
+  Delete
+</button>
       </div>
     </div>
   ))}
