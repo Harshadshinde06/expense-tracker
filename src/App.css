@@ -61,3 +61,37 @@ button:hover{
     font-size: 24px;
     font-weight: bold;
 }
+
+
+.dashboard {
+  display: flex;
+  gap: 15px;
+  margin: 20px 0;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 180px;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.green {
+  background: #E8F5E9;
+}
+
+.blue {
+  background: #E3F2FD;
+}
+
+.orange {
+  background: #FFF3E0;
+}

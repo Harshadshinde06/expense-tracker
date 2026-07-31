@@ -47,6 +47,16 @@ const totalAmount = expenses.reduce((total, item) => {
   return total + Number(item.amount);
 }, 0);
 
+const totalEntries = expenses.length;
+
+const highestExpense =
+  expenses.length > 0
+    ? Math.max(...expenses.map((item) => Number(item.amount)))
+    : 0;
+
+
+
+
 useEffect(() => {
   localStorage.setItem("expenses", JSON.stringify(expenses));
 }, [expenses]);
@@ -57,6 +67,26 @@ useEffect(() => {
   return (
     <div className="container">
       <h1>💰 Expense Tracker</h1>
+     <div className="dashboard">
+
+ <div className="card green">
+    <h3>Total Expense</h3>
+    <h2>₹ {totalAmount}</h2>
+  </div>
+
+  <div className="card blue">
+      
+    <h3>Total Entries</h3>
+    <h2>{totalEntries}</h2>
+  </div>
+
+ <div className="card orange">
+  
+    <h3>Highest Expense</h3>
+    <h2>₹ {highestExpense}</h2>
+  </div>
+</div>
+
       <input
   type="text"
   placeholder="🔍 Search Expense"
