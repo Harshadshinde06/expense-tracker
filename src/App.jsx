@@ -43,6 +43,31 @@ const deleteExpense = (index) => {
   setExpenses(updatedExpenses);
 };
 
+const exportCSV = () => {
+  const headers = ["Category", "Expense", "Amount"];
+
+  const rows = expenses.map((item) => [
+    item.category,
+    item.name,
+    item.amount,
+  ]);
+
+  const csvContent = [headers, ...rows]
+    .map((row) => row.join(","))
+    .join("\n");
+
+  const blob = new Blob([csvContent], {
+    type: "text/csv;charset=utf-8;",
+  });
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "expenses.csv";
+  link.click();
+};
+
 const totalAmount = expenses.reduce((total, item) => {
   return total + Number(item.amount);
 }, 0);
@@ -146,6 +171,16 @@ useEffect(() => {
 
 <button onClick={addExpense}>
   Add Expense
+</button>
+
+<button
+  onClick={exportCSV}
+  style={{
+    marginTop: "10px",
+    background: "#ff9800",
+  }}
+>
+  Export CSV
 </button>
 
 {expenses
